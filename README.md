@@ -10,6 +10,8 @@
 * Aikataulutiedon järjestäminen taulukkoon 🤦
 * Kosmeettisena asiana juna-asemien nimet kuntoon.
 * Työt ja sairastuminen hankaloittivat työskentelyä oman puupäisyyden lisäksi.
+* (päivitys 12h myöhemmin) Jäi kaikenlaista turhaa koodinpätkää ja yksi taulukoiden 
+alustus joka vaikuttaa suorituskykyyn. Jälkiviisaus paras viisaus.
 
 Toiminnallisuus muuten aika siellä hujakoilla mitä oli tarkoitus... 😰
 
