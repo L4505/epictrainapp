@@ -1,0 +1,11 @@
+.title {
+  font-weight: bold;
+  justify-content: flex-start;
+}
+.fill-space {
+  /* This fills the remaining space*/
+  flex: 1 1 auto;
+}
+.rightAlign {
+  justify-content: right;
+}
