@@ -1,5 +1,16 @@
 # Epictrainapp
 
+## **Tämä olisi voinut mennä paremminkin...**
+#### todo:
+* Syötteentarkistus ei ole lähelläkään minttiä.
+* Virheet... Voi ne virheet ja niiden käsittelemättömyys.
+* Aikataulutiedon järjestäminen taulukkoon 🤦
+* Kosmeettisena asiana juna-asemien nimet kuntoon.
+* Työt ja sairastuminen hankaloittivat työskentelyä oman puupäisyyden lisäksi.
+
+Toiminnallisuus muuten aika siellä hujakoilla mitä oli tarkoitus... 😰
+
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.2.3.
 
 ## Development server
