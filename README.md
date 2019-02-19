@@ -1,5 +1,8 @@
 # Epictrainapp
 
+#### live demo: [epictrainapp @ github pages](https://l4505.github.io/epictrainapp/)
+
+
 ## **Tämä olisi voinut mennä paremminkin...**
 #### todo:
 * Syötteentarkistus ei ole lähelläkään minttiä.
