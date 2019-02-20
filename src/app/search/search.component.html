@@ -2,9 +2,8 @@
   <form (ngSubmit)="onSubmit()">
     <mat-form-field class="search-full-width" color=primary>
       <input matInput type="search" placeholder="Hae aseman nimellä" aria-label="Hae aseman nimellä" [formControl]="userInput" [matAutocomplete]="auto">
-      <mat-error *ngIf="userInput.hasError('pattern')">
+      <mat-hint>esim. Jyväskylä</mat-hint>
 
-      </mat-error>
       <mat-autocomplete #auto="matAutocomplete">
         <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
           {{option}}
@@ -16,7 +15,9 @@
 
   </form>
   </section>
-
+<section *ngIf="!test">
+  <mat-card>Haku palauttaa kaukoliikenteen junat jotka saapuvat ja lähtevät hakemaltasi asemalta.</mat-card>
+</section>
 <!--- results below-->
 <div *ngIf="test" class="mat-elevation-z8">
   <h1></h1>

@@ -30,7 +30,7 @@ export class SearchComponent implements OnInit {
   private querySubscription: Subscription;
 
   stations: Station[];
-  userInput = new FormControl('', Validators.pattern('[a-zA-Z ]*'));
+  userInput = new FormControl();
   options: string[] = [];
   filteredOptions: Observable<string[]>;
 
@@ -79,9 +79,6 @@ export class SearchComponent implements OnInit {
   }
 
     getTrains(typestring: string) {
-
-      this.time = [];
-      this.test = [];
       let isArriving = true;
       if (typestring === 'departure') { isArriving = false; }
       this.querySubscription = this.apollo.watchQuery<any>({
