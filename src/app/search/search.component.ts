@@ -93,7 +93,7 @@ export class SearchComponent implements OnInit {
           this.time = this.fArr(this.test, isArriving);
           this.test = Object.assign([], this.test, {time: this.time}); // get arrival/departure
           this.test.sort = this.sort; // sorting
-          // console.log(this.test);
+          console.log(this.test);
           // console.log(this.time);
         });
     }
