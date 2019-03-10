@@ -12,13 +12,15 @@ import { GraphQLModule } from './graphql.module';
 import { SearchComponent } from './search/search.component';
 import { NavComponent } from './nav/nav.component';
 import { AboutComponent } from './about/about.component';
+import { ResultTableComponent } from './result-table/result-table.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SearchComponent,
     NavComponent,
-    AboutComponent
+    AboutComponent,
+    ResultTableComponent
   ],
   imports: [
     BrowserModule,

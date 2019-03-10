@@ -1,11 +1,24 @@
+:host {
+  grid-column: 1/9;
+}
 .title {
+
   font-weight: bold;
-  justify-content: flex-start;
+
 }
-.fill-space {
-  /* This fills the remaining space*/
-  flex: 1 1 auto;
+
+
+mat-toolbar {
+  padding:0;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-column-gap: 0.5em;
+  box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
 }
-.rightAlign {
-  justify-content: right;
+.nav-flex {
+  grid-column: 2/8;
+  display: flex;
+}
+.nav-flex > a {
+ margin-right: 1em;
 }

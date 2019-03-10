@@ -1,9 +1,28 @@
-.search-full-width {
-  margin: 1em 0;
+:host {
+  grid-column: 2/8;
+
+}
+.search-form {
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  height:100%;
+}
+.search-input {
+  width: 100%;
+  margin-bottom: 2em;
+}
+.search-buttons {
+  display: flex;
+}
+button {
+  margin-right: 1em;
 }
 table {
-  width: 100%;
+
 }
 mat-card {
-  max-width: 25%;
+
 }

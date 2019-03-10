@@ -1,11 +1,11 @@
 @import '@angular/material/prebuilt-themes/deeppurple-amber.css';
 @import url('https://fonts.googleapis.com/css?family=Raleway|Roboto');
 
-html, body { height: 100%; }
+html, body { height: 100%; margin: 0; padding: 0;}
 
 body {
   margin: 0;
-  background:lightgray;
+  background: lightgray;
   font-family: 'Roboto', sans-serif;
-  font-size: 1em;
+
 }

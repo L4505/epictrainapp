@@ -1,102 +1,32 @@
 <section id="search-bar">
-  <form (ngSubmit)="onSubmit()">
-    <mat-form-field class="search-full-width" color=primary>
-      <input matInput type="search" placeholder="Hae aseman nimellä" aria-label="Hae aseman nimellä" [formControl]="userInput" [matAutocomplete]="auto">
-      <mat-hint>esim. Jyväskylä</mat-hint>
+  <mat-card>
+    <form (ngSubmit)="onSubmit()" class="search-form">
+      <mat-form-field class="search-input" color=primary>
+        <input matInput type="search" placeholder="Hae aseman nimellä" aria-label="Hae aseman nimellä" [formControl]="userInput" [matAutocomplete]="auto">
+        <mat-hint>esim. Jyväskylä</mat-hint>
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+              {{option}}
+            </mat-option>
+          </mat-autocomplete>
+          <mat-error *ngIf="userInput.hasError('required')">
+              Please enter a value
+          </mat-error>
 
-      <mat-autocomplete #auto="matAutocomplete">
-        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-          {{option}}
-        </mat-option>
-      </mat-autocomplete>
-      <button type="submit" style="display:none">hidden submit</button>
-    </mat-form-field>
-
-
-  </form>
-  </section>
-<section *ngIf="!test">
-  <mat-card>Haku palauttaa kaukoliikenteen junat jotka saapuvat ja lähtevät hakemaltasi asemalta.</mat-card>
-</section>
-<!--- results below-->
-<div *ngIf="test" class="mat-elevation-z8">
-  <h1></h1>
-  <mat-tab-group (selectedTabChange)="getDeparting()">
-  <mat-tab label="Saapuvat">
-  <table mat-table [dataSource]="test">
-
-
-    <ng-container matColumnDef="Juna">
-      <th mat-header-cell *matHeaderCellDef mat-header="Juna">Juna</th>
-      <td mat-cell *matCellDef="let train"> {{train.trainType}} {{train.trainNumber}} </td>
-    </ng-container>
-
-
-    <ng-container matColumnDef="Lähtöasema">
-      <th mat-header-cell *matHeaderCellDef mat-header>Lähtöasema</th>
-      <td mat-cell *matCellDef="let train"> {{ train.timeTableRows[0].stationShortCode }} </td>
-    </ng-container>
-
-
-    <ng-container matColumnDef="Pääteasema">
-      <th mat-header-cell *matHeaderCellDef mat-header>Pääteasema</th>
-      <td mat-cell *matCellDef="let train"> {{ train.timeTableRows[train.timeTableRows.length-1].stationShortCode }} </td>
-    </ng-container>
-
-
-    <ng-container matColumnDef="Saapumisaika">
-      <th mat-header-cell *matHeaderCellDef>Saapumisaika</th>
-      <td mat-cell *matCellDef="let train; let i = index"> {{ test.time[i][0].scheduledTime | date:"HH:mm"  }} </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
-  </table>
-  <mat-card *ngIf="loading"
-   style="display: flex; justify-content: center; align-items: center">
-  <mat-progress-spinner
-    color="primary"
-    mode="indeterminate">
-  </mat-progress-spinner>
+          <mat-error *ngIf="userInput.hasError('incorrect')">
+              Please select a valid project
+          </mat-error>
+      </mat-form-field>
+      <span class="search-buttons">
+        <button type="submit" mat-flat-button color="primary">Hae junia</button>
+        <button mat-stroked-button color="secondary" *ngIf="test" (click)="resetSearch()">Tyhjennä haku</button>
+      </span>
+    </form>
 </mat-card>
+</section>
 
-  </mat-tab>
-<mat-tab label="Lähtevät">
-    <table mat-table [dataSource]="test">
-
-
-        <ng-container matColumnDef="Juna">
-          <th mat-header-cell *matHeaderCellDef>Juna</th>
-          <td mat-cell *matCellDef="let train"> {{train.trainType}} {{train.trainNumber}} </td>
-        </ng-container>
-
-
-        <ng-container matColumnDef="Lähtöasema">
-          <th mat-header-cell *matHeaderCellDef>Lähtöasema</th>
-          <td mat-cell *matCellDef="let train"> {{ train.timeTableRows[0].stationShortCode }} </td>
-        </ng-container>
-
-
-        <ng-container matColumnDef="Pääteasema">
-          <th mat-header-cell *matHeaderCellDef>Pääteasema</th>
-          <td mat-cell *matCellDef="let train"> {{ train.timeTableRows[train.timeTableRows.length-1].stationShortCode }} </td>
-        </ng-container>
-
-
-        <ng-container matColumnDef="Lähtöaika">
-          <th mat-header-cell *matHeaderCellDef>Lähtöaika</th>
-          <td mat-cell *matCellDef="let train; let i = index;"> {{ time[i][0].scheduledTime | date:"HH:mm" }} </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="displayedColumnsDeparting"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumnsDeparting;"></tr>
-      </table>
-</mat-tab>
-</mat-tab-group>
-
-
-</div>
+<mat-progress-spinner *ngIf="loading"></mat-progress-spinner>
+<app-result-table *ngIf="test" [trainData]="test"></app-result-table>
 
 
 

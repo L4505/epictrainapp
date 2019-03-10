@@ -13,10 +13,10 @@ import gql from 'graphql-tag';
 export class DataService {
 
   private stationsURL = 'https://rata.digitraffic.fi/api/v1/metadata/stations';
-  search;
   private arriving = 'arriving_trains';
   private departing = 'departing_trains';
   trainType = this.arriving;
+  search = '';
 
   constructor(private http: HttpClient) { }
 
@@ -26,7 +26,7 @@ export class DataService {
 
   /**
    *
-   * @param stationShortCode string, ie. HKI, JY
+   * @param stationShortCode string, ie. HKI, JY from user input
    * @param mode arriving_trains or departing_trains
    * @param amount int, amount of trains to get
    */
@@ -64,4 +64,5 @@ export class DataService {
     }
     console.log(this.trainType);
   }
+
 }

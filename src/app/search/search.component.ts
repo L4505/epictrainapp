@@ -1,16 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {Apollo} from 'apollo-angular';
-import {Observable, Subscription} from 'rxjs';
-import { HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { Apollo } from 'apollo-angular';
+import { Observable, Subscription } from 'rxjs';
 import { Train } from '../models/train';
-import { HttpClient } from '@angular/common/http';
 import { DataService } from '../services/data.service';
-import gql from 'graphql-tag';
-import { element } from '@angular/core/src/render3';
 import { Station } from '../models/Station';
 import { FormControl, Validators } from '@angular/forms';
 import { startWith, map } from 'rxjs/operators';
-import { MatSort } from '@angular/material';
+import { Router } from '@angular/router';
+import { RequireMatch as RequireMatch } from './requireMatch';
 
 @Component({
   selector: 'app-search',
@@ -19,18 +16,13 @@ import { MatSort } from '@angular/material';
 })
 export class SearchComponent implements OnInit {
 
-  @ViewChild(MatSort) sort: MatSort;
-
-  displayedColumns: string[] = ['Juna', 'Lähtöasema', 'Pääteasema', 'Saapumisaika'];
-  displayedColumnsDeparting: string[] = ['Juna', 'Lähtöasema', 'Pääteasema', 'Lähtöaika'];
-
   loading: boolean;
   test; // trains
   time; // train arrival/departure times
   private querySubscription: Subscription;
 
   stations: Station[];
-  userInput = new FormControl();
+  userInput = new FormControl('', [Validators.required, RequireMatch]);
   options: string[] = [];
   filteredOptions: Observable<string[]>;
 
@@ -48,21 +40,21 @@ export class SearchComponent implements OnInit {
   fArr = (arr: Train[], isArriving: boolean) => {
     let type = 'ARRIVAL';
       if (isArriving === false) { type = 'DEPARTURE'; }
-    return arr.map(nested => nested.timeTableRows
+      return arr.map(nested => nested.timeTableRows
       .filter(filtered => filtered.stationShortCode === this.data.search && filtered.type === type));
-    }
+  }
 
   /**
    * Get all stations with passenger traffic
    */
   getStations(): void {
-      this.data.getStations()
-        .subscribe((stations) => {
-          this.stations = stations.filter(station => station.passengerTraffic === true);
-          this.options = this.stations.map(station => station.stationName);
-          // console.log(this.stations);
-        });
+    this.data.getStations()
+      .subscribe((stations) => {
+        this.stations = stations.filter(station => station.passengerTraffic === true);
+        this.options = this.stations.map(station => station.stationName);
+      });
   }
+
   /**
    * Autocomplete filter
    * @param value string
@@ -73,33 +65,57 @@ export class SearchComponent implements OnInit {
   }
 
   onSubmit() {
-    const stationName = this.stations.filter(station => station.stationName === this.userInput.value);
+    const stationName = this.stations.filter(s => s.stationName === this.userInput.value);
     this.data.setStation(stationName[0]['stationShortCode']);
-      this.getTrains('arrival');
+    this.getTrains('arrival');
   }
 
-    getTrains(typestring: string) {
-      let isArriving = true;
-      if (typestring === 'departure') { isArriving = false; }
-      this.querySubscription = this.apollo.watchQuery<any>({
-        query: this.data.getStationsTrainsUsingGET(this.data.search, this.data.trainType, 10)
+  getTrains(typestring: string) {
+     let isArriving = true;
+     if (typestring === 'departure') { isArriving = false; }
+
+     this.querySubscription = this.apollo.watchQuery<any>({
+       query: this.data.getStationsTrainsUsingGET(this.data.search, this.data.trainType, 10)
       })
         .valueChanges
         .subscribe(results => {
           this.loading = results.loading;
-          const data = results.data.viewer.getStationsTrainsUsingGET;
-          this.test = data.filter(train => train.timeTableRows.find(ttr =>
-            ttr.type === typestring.toUpperCase() && ttr.stationShortCode === this.data.search));
+          this.test = results.data.viewer.getStationsTrainsUsingGET
+            .filter(train => train.timeTableRows.find(ttr =>
+              ttr.type === typestring.toUpperCase() && ttr.stationShortCode === this.data.search));
+
           this.time = this.fArr(this.test, isArriving);
-          this.test = Object.assign([], this.test, {time: this.time}); // get arrival/departure
-          this.test.sort = this.sort; // sorting
+          this.test = Object.assign([], this.test, {time: this.time}); // get arrival/departure time
+
+          // this.test = this.getStationNames(this.stations, this.test);
+          // console.log(this.loading);
           // console.log(this.test);
           // console.log(this.time);
         });
-    }
+  }
 
-    getDeparting() {
-      this.data.setDeparting();
-      this.getTrains('departure');
+  getStationNames = (station: Station[], train: Train[]) => {
+    for (let index = 0; index < station.length; index++) {
+      const el = station[index];
+      if (el.stationUICCode === train[0].timeTableRows[0].stationUICCode) {
+         train[0].timeTableRows[0].stationShortCode = el.stationName;
+      }
     }
-}
+  }
+
+  resetSearch() {
+    this.test = undefined;
+    this.userInput.setValue('');
+  }
+
+  isLate() {
+    for (let i = 0; i < this.test.time[i][0].differenceInMinutes.length; i++) {
+      let el = this.test.time[i][0].differenceInMinutes[i];
+      if (el > 0) {
+        el = `${el} min myöhässä`;
+        console.log(el);
+      } else { el = ''; }
+    }
+  }
+
+} // endof class
