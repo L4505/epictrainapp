@@ -2,7 +2,7 @@
 <!--<a [routerLink]="['/']" routerLinkActive="router-link-active" mat-raised-button color="primary"
    class="back-btn"><mat-icon>arrow_back</mat-icon> Takaisin</a> -->
 <mat-card *ngIf="trains">
-  <mat-tab-group (selectedTabChange)="changeTab()">
+  <mat-tab-group (selectedTabChange)="tabClick($event)">
     <mat-tab label="Saapuvat">
       <table mat-table [dataSource]="trains">
 

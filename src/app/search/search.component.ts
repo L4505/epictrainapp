@@ -22,7 +22,8 @@ export class SearchComponent implements OnInit {
   private querySubscription: Subscription;
 
   stations: Station[];
-  userInput = new FormControl('', [Validators.required, RequireMatch]);
+  userInput = new FormControl('', [Validators.required]);
+  // userInput = new FormControl('', [Validators.required, RequireMatch]);
   options: string[] = [];
   filteredOptions: Observable<string[]>;
 
@@ -65,9 +66,16 @@ export class SearchComponent implements OnInit {
   }
 
   onSubmit() {
-    const stationName = this.stations.filter(s => s.stationName === this.userInput.value);
-    this.data.setStation(stationName[0]['stationShortCode']);
-    this.getTrains('arrival');
+    const stationName = this.stations.filter(
+      s => s.stationName.toLowerCase() === this.userInput.value || s.stationName === this.userInput.value );
+    if (!Array.isArray(stationName) || !stationName.length) {
+      console.log('userinput not valid');
+    } else {
+      this.data.setStation(stationName[0]['stationShortCode']);
+      this.getTrains('arrival');
+    }
+
+
   }
 
   getTrains(typestring: string) {
@@ -117,5 +125,15 @@ export class SearchComponent implements OnInit {
       } else { el = ''; }
     }
   }
+
+  isEmpty(obj) {
+    for (let key in obj) {
+        if (obj.hasOwnProperty(key)) {
+          return false;
+        }
+    }
+    return true;
+  }
+
 
 } // endof class

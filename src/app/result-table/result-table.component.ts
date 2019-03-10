@@ -21,15 +21,21 @@ export class ResultTableComponent implements OnChanges {
 
   constructor(private data: DataService, private search: SearchComponent) { }
 
-  changeTab() {
-    this.data.setDeparting();
-    this.search.getTrains('departure');
-    console.log(this.search.test);
+  tabClick(tab) {
+    if (tab.index === 0) {
+      this.data.setDeparting();
+      this.search.getTrains('arrival');
+    } else {
+      this.data.setDeparting();
+      this.search.getTrains('departure');
+    }
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    this.trains = changes.trainData.currentValue;
-    console.log(this.trains);
+      this.trains = changes.trainData.currentValue;
+
+
+
 
     // this.sortedData = changes.trainData.currentValue;
     /*

@@ -10,12 +10,13 @@
             </mat-option>
           </mat-autocomplete>
           <mat-error *ngIf="userInput.hasError('required')">
-              Please enter a value
+              Haku ei voi olla tyhjä
           </mat-error>
-
+          <!--
           <mat-error *ngIf="userInput.hasError('incorrect')">
               Please select a valid project
           </mat-error>
+         -->
       </mat-form-field>
       <span class="search-buttons">
         <button type="submit" mat-flat-button color="primary">Hae junia</button>
