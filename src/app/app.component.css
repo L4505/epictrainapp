@@ -1,7 +1,17 @@
 #container {
   margin: 0;
-  padding: 0 2em;
-  display: flex;
-  flex-direction: column;
-
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+  grid-row-gap: 1em;
+  grid-column-gap: 0.5em;
+  max-height: 100%;
 }
+section> .search-bar {
+  grid-row: 3;
+  /* display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height:100%; */
+}
+

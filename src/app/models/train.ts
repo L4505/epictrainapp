@@ -9,7 +9,7 @@ export class Train {
   timeTableRows: [
     {
       stationShortCode: string;
-      stationUICCode: string;
+      stationUICCode: number;
       countryCode: string;
       type: string;
       trainStopping: boolean;
@@ -44,6 +44,16 @@ export class Train {
   trainNumber: number;
   trainType: string;
   version: number;
-  time: {};
+  time: [
+    {
+      actualTime: string;
+      cancelled: boolean;
+      differenceInMinutes: string;
+      scheduledTime: string;
+      stationShortCode: string;
+      trainStopping: boolean;
+      type: string;
+    }
+  ];
 
 }

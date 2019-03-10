@@ -1,0 +1,15 @@
+:host {
+  grid-column: 2/8;
+  grid-row: 2;
+}
+mat-card {
+  margin: 1em 0;
+}
+
+table {
+  width: 100%;
+}
+.back-btn {
+  margin-top: 2em;
+  margin-bottom: 2em;
+}

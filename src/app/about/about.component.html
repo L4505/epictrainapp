@@ -1,11 +1,11 @@
-<h3>Tämä olisi voinut mennä paremminkin...</h3>
-<h4>todo:</h4>
-<ul>
-  <li>Syötteentarkistus ei ole lähelläkään minttiä.</li>
-  <li>Virheet... Voi ne virheet ja niiden käsittelemättömyys.</li>
-  <li>Kosmeettisena asiana juna-asemien nimet kuntoon.</li>
-</ul>
+<section class="wrap">
 
-<p>
-  Toiminnallisuus muuten aika siellä hujakoilla mitä oli tarkoitus... 😰
-</p>
+<mat-card class="about">
+  <p> Haku palauttaa kaukoliikenteen junat jotka saapuvat ja lähtevät hakemaltasi asemalta.</p>
+  <p>Käytetty avoin rajapinta: <a href="https://www.digitraffic.fi/rautatieliikenne/">Traffic Management Finland</a>
+  </p>
+
+
+</mat-card>
+<a [routerLink]="['/']" routerLinkActive="router-link-active" mat-raised-button color="primary" class="back-btn"><mat-icon>arrow_back</mat-icon> Takaisin</a>
+</section>

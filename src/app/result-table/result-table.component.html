@@ -1,0 +1,64 @@
+<!--- results below--->
+<!--<a [routerLink]="['/']" routerLinkActive="router-link-active" mat-raised-button color="primary"
+   class="back-btn"><mat-icon>arrow_back</mat-icon> Takaisin</a> -->
+<mat-card *ngIf="trains">
+  <mat-tab-group (selectedTabChange)="tabClick($event)">
+    <mat-tab label="Saapuvat">
+      <table mat-table [dataSource]="trains">
+
+        <ng-container matColumnDef="Juna">
+          <th mat-header-cell *matHeaderCellDef mat-header="Juna">Juna</th>
+          <td mat-cell *matCellDef="let train"> {{train.trainType}} {{train.trainNumber}} </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="Lähtöasema">
+          <th mat-header-cell *matHeaderCellDef mat-header>Lähtöasema</th>
+          <td mat-cell *matCellDef="let train"> {{ train.timeTableRows[0].stationShortCode }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Pääteasema">
+          <th mat-header-cell *matHeaderCellDef mat-header>Pääteasema</th>
+          <td mat-cell *matCellDef="let train"> {{ train.timeTableRows[train.timeTableRows.length-1].stationShortCode }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Saapumisaika">
+          <th mat-header-cell *matHeaderCellDef>Saapumisaika</th>
+          <td mat-cell *matCellDef="let train; let i = index"> {{ trains['time'][i][0].scheduledTime | date: 'HH:mm' }} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      </table>
+    </mat-tab>
+    <mat-tab label="Lähtevät">
+      <table mat-table [dataSource]="trains">
+
+          <ng-container matColumnDef="Juna">
+            <th mat-header-cell *matHeaderCellDef>Juna</th>
+            <td mat-cell *matCellDef="let train"> {{train.trainType}} {{train.trainNumber}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="Lähtöasema">
+            <th mat-header-cell *matHeaderCellDef>Lähtöasema</th>
+            <td mat-cell *matCellDef="let train"> {{ train.timeTableRows[0].stationShortCode }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="Pääteasema">
+            <th mat-header-cell *matHeaderCellDef>Pääteasema</th>
+            <td mat-cell *matCellDef="let train"> {{ train.timeTableRows[train.timeTableRows.length-1].stationShortCode }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="Lähtöaika">
+            <th mat-header-cell *matHeaderCellDef>Lähtöaika</th>
+            <td mat-cell *matCellDef="let train; let i = index;"> {{ trains['time'][i][0].scheduledTime | date: 'HH:mm' }} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumnsDeparting"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumnsDeparting;"></tr>
+        </table>
+    </mat-tab>
+  </mat-tab-group>
+</mat-card>
+
