@@ -43,6 +43,7 @@ export class DataService {
             cancelled
             actualTime
             type
+            differenceInMinutes
           }
         }
       }
